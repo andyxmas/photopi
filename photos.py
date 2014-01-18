@@ -4,10 +4,11 @@ from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
 from contextlib import closing
 import picamera
+import datetime
 
 DEBUG = True
 # configuration
-DATABASE = '/tmp/photos.db'
+DATABASE = 'photos.db'
 SECRET_KEY = 'with random words will it be secure development key?'
 USERNAME = 'admin'
 PASSWORD = 'default'
@@ -37,17 +38,20 @@ def teardown_request(exception):
 
 @app.route('/')
 def show_photos():
-    cur = g.db.execute('select title, text from photos order by id desc')
-    photos = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+    cur = g.db.execute('select date, title, text, id, filename from photos order by id desc')
+    photos = [dict(date=row[0], title=row[1], text=row[2], id=row[3], filename=row[4]) for row in cur.fetchall()]
     return render_template('show_photos.html', photos=photos)
 
 @app.route('/add', methods=['POST'])
 def add_photo():
     if not session.get('logged_in'):
         abort(401)
-    g.db.execute('insert into photos (title, text) values (?, ?)',
-                 [request.form['title'], request.form['text']])
+    photo_filename = 'photo_' + str(datetime.datetime.now()) + '.png'
+    g.db.execute('insert into photos (date, title, text, filename) values (?, ?, ?, ?)',
+                 [datetime.datetime.now(), request.form['photo-title'], request.form['photo-desc'], photo_filename])
     g.db.commit()
+    with picamera.PiCamera() as camera:
+        camera.capture(photo_filename)
     flash('New photo was successfully posted')
     return redirect(url_for('show_photos'))
 
@@ -74,7 +78,7 @@ def logout():
 @app.route('/shoot')
 def shoot():
     with picamera.PiCamera() as camera:
-        camera.capture('photo_test123.png')
+        camera.capture('photo_test123.png', thumbnail)
     return redirect(url_for('show_photos'))
 
 if __name__ == '__main__':

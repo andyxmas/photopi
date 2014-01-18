@@ -1,21 +1,32 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_photo') }}" method=post class=add-photo>
-      <dl>
-        <dt>Title:
-        <dd><input type=text size=30 name=title>
-        <dt>Text:
-        <dd><textarea name=text rows=5 cols=40></textarea>
-        <dd><input type=submit value=Share>
-      </dl>
+    <form role="form" action="{{ url_for('add_photo') }}" method=post>
+      <div class="form-group">
+        <label for="photo-title">Title (optional)</label>
+        <input type="text" class="form-control" name="photo-title" placeholder="Enter a title for the photo">
+      </div>
+      <div class="form-group">
+        <label for="photo-desc">Description (optional)</label>
+        <input type="textarea" class="form-control" name="photo-desc" placeholder="Enter a description for the photo">
+      </div>
+      <input type="submit" class="btn btn-success" vale="Take photo">
     </form>
   {% endif %}
-  <ul class=photos>
+  <table class="table table-bordered table-striped table-hover">
+    <tr>
+      <th>Filename</th>
+      <th>Date</th>
+    </tr>
+
   {% for photo in photos %}
-    <li><h2>{{ photo.title }}</h2>{{ photo.text|safe }}
+    <tr>
+      <td>{{ photo.filename }}</td>
+      <td>{{ photo.date }}</td>
   {% else %}
-    <li><em>Unbelievable.  No photos here so far</em>
+    <tr>
+      <td colspan="2">Unbelievable.  No photos here so far</td>
+    </tr>
   {% endfor %}
-  </ul>
+  </table>
 {% endblock %}
