@@ -10,23 +10,38 @@
         <label for="photo-desc">Description (optional)</label>
         <input type="textarea" class="form-control" name="photo-desc" placeholder="Enter a description for the photo">
       </div>
-      <input type="submit" class="btn btn-success" vale="Take photo">
+      <input type="submit" class="btn btn-success" value="Take photo">
     </form>
   {% endif %}
-  <table class="table table-bordered table-striped table-hover">
-    <tr>
-      <th>Filename</th>
-      <th>Date</th>
-    </tr>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+      <tr>
+	<th>ID</th>
+        <th>Filename</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
 
-  {% for photo in photos %}
-    <tr>
-      <td>{{ photo.filename }}</td>
-      <td>{{ photo.date }}</td>
-  {% else %}
-    <tr>
-      <td colspan="2">Unbelievable.  No photos here so far</td>
-    </tr>
-  {% endfor %}
-  </table>
+    {% for photo in photos %}
+      <tr>
+	<td>{{ photo.id }}</td>
+        <td><a href="/static/photos/{{ photo.filename }}">{{ photo.filename }}</a></td>
+        <td>{{ photo.date }}</td>
+	<td>
+	{% if session.logged_in %}
+        <button class="btn">Edit</button>
+	<form action="{{ url_for('delete_photo') }}" method="post">
+    	<input type="hidden" value="{{ photo.id }}" name="id" />
+      <input type="hidden" value="{{ photo.filename }}" name="filename" />
+    	<button class="btn btn-warning" type="submit">Delete</button>
+	</form>	
+	{% endif %}
+	</td>
+    {% else %}
+      <tr>
+        <td colspan="2">Unbelievable.  No photos here so far</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
 {% endblock %}

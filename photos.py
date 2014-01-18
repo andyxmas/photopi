@@ -5,6 +5,8 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from contextlib import closing
 import picamera
 import datetime
+import os
+import sys
 
 DEBUG = True
 # configuration
@@ -12,6 +14,7 @@ DATABASE = 'photos.db'
 SECRET_KEY = 'with random words will it be secure development key?'
 USERNAME = 'admin'
 PASSWORD = 'default'
+photo_directory = 'static/photos/'
 
 # create our little application :)
 app = Flask(__name__)
@@ -47,12 +50,34 @@ def add_photo():
     if not session.get('logged_in'):
         abort(401)
     photo_filename = 'photo_' + str(datetime.datetime.now()) + '.png'
+    photo_location = photo_directory + photo_filename
     g.db.execute('insert into photos (date, title, text, filename) values (?, ?, ?, ?)',
                  [datetime.datetime.now(), request.form['photo-title'], request.form['photo-desc'], photo_filename])
     g.db.commit()
     with picamera.PiCamera() as camera:
-        camera.capture(photo_filename)
-    flash('New photo was successfully posted')
+        camera.capture(photo_location)
+    flash('New photo was successfully posted', 'success')
+    return redirect(url_for('show_photos'))
+
+@app.route('/delete', methods=['POST'])
+def delete_photo():
+    if not session.get('logged_in'):
+        abort(401)
+    try:
+        g.db.execute('DELETE FROM photos WHERE id=' + request.form['id'])
+        g.db.commit()
+    except:
+        flash('Something went wrong with deleting the db record', 'danger')
+    else:
+        flash('Photo entry was succesfully deleted from db', 'success')
+    
+    try:
+        os.remove(photo_directory + request.form['filename'])
+    except:
+        flash('Something went wrong with deleting the photo file:', 'danger')
+        flash(str(sys.exc_info()), 'warning')
+    else:
+        flash('The photo file was succesfully deleted', 'success')
     return redirect(url_for('show_photos'))
 
 @app.route('/login', methods=['GET', 'POST'])
