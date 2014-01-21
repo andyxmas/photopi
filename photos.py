@@ -7,6 +7,7 @@ import picamera
 import datetime
 import os
 import sys
+import datetime
 
 DEBUG = True
 # configuration
@@ -14,7 +15,7 @@ DATABASE = 'photos.db'
 SECRET_KEY = 'with random words will it be secure development key?'
 USERNAME = 'admin'
 PASSWORD = 'default'
-photo_directory = 'static/photos/'
+PHOTO_DIRECTORY = 'static/photos/'
 
 # create our little application :)
 app = Flask(__name__)
@@ -49,8 +50,8 @@ def show_photos():
 def add_photo():
     if not session.get('logged_in'):
         abort(401)
-    photo_filename = 'photo_' + str(datetime.datetime.now()) + '.png'
-    photo_location = photo_directory + photo_filename
+    photo_filename = datetime.datetime.now().strftime("photo_%d-%m-%Y-%H-%M-%S.jpg")
+    photo_location = app.config['PHOTO_DIRECTORY'] + photo_filename
     g.db.execute('insert into photos (date, title, text, filename) values (?, ?, ?, ?)',
                  [datetime.datetime.now(), request.form['photo-title'], request.form['photo-desc'], photo_filename])
     g.db.commit()
@@ -72,7 +73,7 @@ def delete_photo():
         flash('Photo entry was succesfully deleted from db', 'success')
     
     try:
-        os.remove(photo_directory + request.form['filename'])
+        os.remove(app.config['PHOTO_DIRECTORY'] + request.form['filename'])
     except:
         flash('Something went wrong with deleting the photo file:', 'danger')
         flash(str(sys.exc_info()), 'warning')
@@ -105,6 +106,14 @@ def shoot():
     with picamera.PiCamera() as camera:
         camera.capture('photo_test123.png', thumbnail)
     return redirect(url_for('show_photos'))
+
+@app.route('/settings')
+def settings():
+    return render_template('settings.html') 
+
+@app.route('/set_preferences', methods=['GET', 'POST'])
+def set_preferences():
+    return redirect(url_for('settings'))
 
 if __name__ == '__main__':
     app.debug = True

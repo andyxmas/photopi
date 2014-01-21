@@ -25,7 +25,7 @@
     {% for photo in photos %}
       <tr>
 	<td>{{ photo.id }}</td>
-        <td><a href="/static/photos/{{ photo.filename }}">{{ photo.filename }}</a></td>
+	<td><a href="/static/photos/{{ photo.filename }}">{{ photo.filename }}</a></td>
         <td>{{ photo.date }}</td>
 	<td>
 	{% if session.logged_in %}
@@ -44,4 +44,5 @@
     {% endfor %}
     </table>
   </div>
+
 {% endblock %}
