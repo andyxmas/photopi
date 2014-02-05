@@ -85,6 +85,10 @@ def add_photo():
     with picamera.PiCamera() as camera:
         camera.brightness = (int(request.form['brightness']))
         camera.ISO = (int(request.form['ISO']))
+	camera.awb_mode = (request.form['awb_mode'])
+	camera.contrast = (int(request.form['contrast']))
+	camera.exposure_compensation = (int(request.form['exposure_compensation']))
+	camera.exporsure_mode = (request.form['exposure_mode'])
         camera.capture(photo_location, format = 'jpeg', quality = int(request.form['jpg-quality']))
     flash('New photo was successfully posted', 'success')
     return redirect(url_for('show_photos'))

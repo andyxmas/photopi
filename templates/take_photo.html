@@ -17,7 +17,18 @@
         <label for="jpg-quality" class="col-sm-2 control-label">JPG Quality</label>
         <div class="col-sm-10">
             <strong>1</strong>
-            <input class="slider" type="number" class="span2" value="85" data-slider-min="1" data-slider-max="100" data-slider-step="1" data-slider-value="50" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="show" name="jpg-quality">
+            <input class="slider" 
+		   type="number" 
+		   class="span2" 
+	 	   data-slider-min="1" 
+	  	   data-slider-max="100" 
+		   data-slider-step="1" 
+		   value="85" 
+		   data-slider-value="85" 
+		   data-slider-orientation="horizontal" 
+		   data-slider-selection="after" 
+		   data-slider-tooltip="show" 
+		   name="jpg-quality">
             <strong>100</strong>
         </div>
     </div>
@@ -25,14 +36,23 @@
         <label for="brightness" class="col-sm-2 control-label">Brightness</label>
         <div class="col-sm-10">
             <strong>0</strong>
-            <input class="slider" type="number" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-val$ name="brightness" <strong>100</strong>
+            <input class="slider" 
+		   type="number" 
+		   class="span2" 
+		   data-slider-min="0" 
+		   data-slider-max="100" 
+		   data-slider-step="1" 
+		   value="75" 
+		   data-slider-value="75" 
+		   name="brightness" />
+	    <strong>100</strong>
         </div>
     </div>
     <div class="form-group">
         <label for="ISO" class="col-sm-2 control-label">ISO</label>
         <div class="col-sm-10">
             <select class="form-control" name="ISO">
-                <option>0</option>
+                <option value="0">0 (Auto)</option>
                 <option>100</option>
                 <option>200</option>
                 <option>320</option>
@@ -43,7 +63,88 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+
+<div class="form-group">
+        <label for="awb_mode" class="col-sm-2 control-label">White Balance</label>
+        <div class="col-sm-10">
+            <select class="form-control" name="awb_mode">
+                <option value="auto">Auto</option>
+                <option value="sunlight">Sunlight</option>
+                <option value="cloudy">Cloudy</option>
+                <option value="shade">Shade</option>
+                <option value="tungsten">Tungsten</option>
+                <option value="fluorescent">Fluorescent</option>
+                <option value="incandescent">Incandescent</option>
+                <option value="flash">Flash</option>
+                <option value="horizon">Horizon</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- @todo -  color_effects. value between 0 and 255 for u and v. or 'None' -->
+
+<div class="form-group">
+        <label for="contrast" class="col-sm-2 control-label">Contrast</label>
+        <div class="col-sm-10">
+            <strong>-100</strong>
+            <input class="slider" 
+		   type="number" 
+		   class="span2" 
+		   data-slider-min="-100" 
+		   data-slider-max="100" 
+		   data-slider-step="1" 
+		   value="0" 
+		   data-slider-value="0"
+		   name="contrast" />
+	     <strong>+100</strong>
+        </div>
+    </div>
+
+<div class="form-group">
+        <label for="exposure_compensation" class="col-sm-2 control-label">Exposure Compensation</label>
+        <div class="col-sm-10">
+            <strong>-25</strong>
+            <input class="slider" 
+                   type="number" 
+                   class="span2" 
+                   data-slider-min="-25" 
+                   data-slider-max="25" 
+                   data-slider-step="1" 
+                   value="0" 
+                   data-slider-value="0"
+                   name="exposure_compensation" />
+             <strong>+25</strong>
+        </div>    
+</div>
+
+<div class="form-group">
+        <label for="exposure_mode" class="col-sm-2 control-label">Exposure Mode</label>
+        <div class="col-sm-10">
+            <select class="form-control" name="exposure_mode">
+                <option value="auto">Auto</option>
+                <option value="night">Night</option>
+                <option value="nightpreview">Night Preview</option>
+                <option value="backlight">Backlight</option>
+                <option value="spotlight">Spotlight</option>
+                <option value="sports">Sports</option>
+                <option value="snow">Snow</option>
+                <option value="beach">Beach</option>
+                <option value="verylong">Very Long</option>
+                <option value="fixedfps">Fixed FPS</option>
+                <option value="antishake">Anti Shake</option>
+                <option value="fireworks">Fireworks</option>
+            </select>
+        </div>
+    </div>
+
+<!-- @todo hflip -->
+<!-- @todo vflip -->
+<!-- @todo image_effect 
+{u'sketch': 6, u'posterise': 19, u'gpen': 11, u'colorbalance': 21, u'film': 14, u'pastel': 12, u'emboss': 8, u'denoise': 7, u'negative': 1, u'hatch': 10, u'colorswap': 17, u'colorpoint': 20, u'saturation': 16, u'blackboard': 5, u'blur': 15, u'posterize': 3, u'watercolor': 13, u'cartoon': 22, u'none': 0, u'whiteboard': 4, u'washedout': 18, u'solarize': 2, u'oilpaint': 9}
+-->
+<!-- @meter_mode -->
+
+<div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <input type="submit" class="btn btn-success" value="Take photo">
         </div>
