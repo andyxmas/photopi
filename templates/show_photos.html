@@ -1,18 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if session.logged_in %}
-    <form role="form" action="{{ url_for('add_photo') }}" method=post>
-      <div class="form-group">
-        <label for="photo-title">Title (optional)</label>
-        <input type="text" class="form-control" name="photo-title" placeholder="Enter a title for the photo">
-      </div>
-      <div class="form-group">
-        <label for="photo-desc">Description (optional)</label>
-        <input type="textarea" class="form-control" name="photo-desc" placeholder="Enter a description for the photo">
-      </div>
-      <input type="submit" class="btn btn-success" value="Take photo">
-    </form>
-  {% endif %}
+  
   <div class="table-responsive">
     <table class="table table-bordered table-striped table-hover">
       <tr>
@@ -29,8 +17,13 @@
         <td>{{ photo.date }}</td>
 	<td>
 	{% if session.logged_in %}
-        <button class="btn">Edit</button>
-	<form action="{{ url_for('delete_photo') }}" method="post">
+        
+  <form class="one-button">
+      <input type="hidden" value="{{ photo.id }}" name="id" />
+      <input type="hidden" value="{{ photo.filename }}" name="filename" />
+      <button class="btn" type="submit">Edit</button>
+  </form>
+	<form class="one-button" action="{{ url_for('delete_photo') }}" method="post">
     	<input type="hidden" value="{{ photo.id }}" name="id" />
       <input type="hidden" value="{{ photo.filename }}" name="filename" />
     	<button class="btn btn-warning" type="submit">Delete</button>

@@ -1,3 +1,5 @@
 body {
     padding-top: 50px;
 }
+
+form.one-button{display:inline-block;}

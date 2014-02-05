@@ -1,4 +1,7 @@
 {% extends "layout.html" %} {% block body %} {% if session.logged_in %}
+
+<div class="alert alert-danger">Settings are not yet functional!</div>
+
 <form class="form-horizontal" role="form" action="{{ url_for('set_preferences') }}" method="post">
     <div class="form-group">
         <label for="jpg-quality" class="col-sm-2 control-label">JPG Quality</label>

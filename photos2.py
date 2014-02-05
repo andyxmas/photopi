@@ -40,38 +40,11 @@ def teardown_request(exception):
     if db is not None:
         db.close()
 
-#Visible Webpages
 @app.route('/')
 def show_photos():
     cur = g.db.execute('select date, title, text, id, filename from photos order by id desc')
     photos = [dict(date=row[0], title=row[1], text=row[2], id=row[3], filename=row[4]) for row in cur.fetchall()]
     return render_template('show_photos.html', photos=photos)
-
-@app.route('/take-photo')
-def take_photo():
-    return render_template('take_photo.html') 
-
-#Functional URLs
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_photos'))
-    return render_template('login.html', error=error)
-
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for('show_photos'))
 
 @app.route('/add', methods=['POST'])
 def add_photo():
@@ -83,9 +56,7 @@ def add_photo():
                  [datetime.datetime.now(), request.form['photo-title'], request.form['photo-desc'], photo_filename])
     g.db.commit()
     with picamera.PiCamera() as camera:
-        camera.brightness = (int(request.form['brightness']))
-        camera.ISO = (int(request.form['ISO']))
-        camera.capture(photo_location, format = 'jpeg', quality = int(request.form['jpg-quality']))
+        camera.capture(photo_location)
     flash('New photo was successfully posted', 'success')
     return redirect(url_for('show_photos'))
 
@@ -110,7 +81,37 @@ def delete_photo():
         flash('The photo file was succesfully deleted', 'success')
     return redirect(url_for('show_photos'))
 
-#Run this on the little dev server
-if __name__ == '__main__':
-#    app.debug = True
-    app.run(host='0.0.0.0', port=80)
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != app.config['USERNAME']:
+            error = 'Invalid username'
+        elif request.form['password'] != app.config['PASSWORD']:
+            error = 'Invalid password'
+        else:
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('show_photos'))
+    return render_template('login.html', error=error)
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+    return redirect(url_for('show_photos'))
+
+@app.route('/shoot')
+def shoot():
+    with picamera.PiCamera() as camera:
+        camera.capture('photo_test123.png', thumbnail)
+    return redirect(url_for('show_photos'))
+
+@app.route('/settings')
+def settings():
+    return render_template('settings.html') 
+
+@app.route('/set_preferences', methods=['GET', 'POST'])
+def set_preferences():
+    return redirect(url_for('settings'))
+
