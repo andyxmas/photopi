@@ -1,6 +1,10 @@
 {% extends "layout.html" %} {% block body %} {% if session.logged_in %}
 
+<div class="row">
+
 <form class="form-horizontal" role="form" action="{{ url_for('add_photo') }}" method="post">
+<div class="col-md-6">
+
     <div class="form-group">
         <label class="col-sm-2 control-label" for="photo-title">Title (optional)</label>
         <div class="col-sm-10">
@@ -32,6 +36,7 @@
             <strong>100</strong>
         </div>
     </div>
+
     <div class="form-group">
         <label for="brightness" class="col-sm-2 control-label">Brightness</label>
         <div class="col-sm-10">
@@ -42,12 +47,13 @@
 		   data-slider-min="0" 
 		   data-slider-max="100" 
 		   data-slider-step="1" 
-		   value="75" 
-		   data-slider-value="75" 
+		   value="50" 
+		   data-slider-value="50"" 
 		   name="brightness" />
 	    <strong>100</strong>
         </div>
     </div>
+
     <div class="form-group">
         <label for="ISO" class="col-sm-2 control-label">ISO</label>
         <div class="col-sm-10">
@@ -81,7 +87,7 @@
         </div>
     </div>
 
-    <!-- @todo -  color_effects. value between 0 and 255 for u and v. or 'None' -->
+<!-- @todo -  color_effects. value between 0 and 255 for u and v. or 'None' -->
 
 <div class="form-group">
         <label for="contrast" class="col-sm-2 control-label">Contrast</label>
@@ -98,7 +104,28 @@
 		   name="contrast" />
 	     <strong>+100</strong>
         </div>
-    </div>
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="form-group">
+        <label for="sharpness" class="col-sm-2 control-label">Sharpness</label>
+        <div class="col-sm-10">
+            <strong>-100</strong>
+            <input class="slider" 
+                   type="number" 
+                   class="span2" 
+                   data-slider-min="-100" 
+                   data-slider-max="100" 
+                   data-slider-step="1" 
+                   value="0" 
+                   data-slider-value="0"
+                   name="sharpness" />
+             <strong>+100</strong>
+        </div>
+</div>
 
 <div class="form-group">
         <label for="exposure_compensation" class="col-sm-2 control-label">Exposure Compensation</label>
@@ -137,19 +164,88 @@
         </div>
     </div>
 
-<!-- @todo hflip -->
-<!-- @todo vflip -->
-<!-- @todo image_effect 
-{u'sketch': 6, u'posterise': 19, u'gpen': 11, u'colorbalance': 21, u'film': 14, u'pastel': 12, u'emboss': 8, u'denoise': 7, u'negative': 1, u'hatch': 10, u'colorswap': 17, u'colorpoint': 20, u'saturation': 16, u'blackboard': 5, u'blur': 15, u'posterize': 3, u'watercolor': 13, u'cartoon': 22, u'none': 0, u'whiteboard': 4, u'washedout': 18, u'solarize': 2, u'oilpaint': 9}
--->
-<!-- @meter_mode -->
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+	<div class="checkbox">
+    	    <label>
+      		<input type="checkbox" name="vflip" value="True" checked> vflip
+    	    </label>
+ 	</div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+	<div class="checkbox">
+    	    <label>
+      		<input type="checkbox" name="hflip" value="True" checked> hflip
+    	    </label>
+  	</div>
+    </div>
+</div>
+
+<div class="form-group">
+        <label for="image_effect" class="col-sm-2 control-label">Image Effect</label>
+        <div class="col-sm-10">
+            <select class="form-control" name="image_effect">
+                <option value="none">None</option>
+                <option value="negative">Negative</option>
+                <option value="solarize">Solarize</option>
+                <option value="posterize">Posterize</option>
+                <option value="whiteboard">Whiteboard</option>
+                <option value="blackboard">Blackboard</option>
+                <option value="sketch">Sketch</option>
+                <option value="denoise">Denoise</option>
+                <option value="emboss">Emboss</option>
+                <option value="oilpaint">Oilpaint</option>
+                <option value="hatch">Hatch</option>
+                <option value="gpen">Gpen</option>
+                <option value="pastel">Pastel</option>
+                <option value="watercolor">Watercolor</option>
+                <option value="blur">Blur</option>
+                <option value="saturation">Saturation</option>
+                <option value="colorswap">Colour Swap</option>
+                <option value="washedout">Washed Out</option>
+                <option value="posterise">Posterise</option>
+                <option value="colorpoint">Color Point</option>
+                <option value="colorbalance">Color Balance</option>
+                <option value="cartoon">Cartoon</option>
+	    </select>
+	</div>
+</div>
+
+<div class="form-group">
+        <label for="meter_mode" class="col-sm-2 control-label">Meter Mode</label>
+        <div class="col-sm-10">
+            <select class="form-control" name="meter_mode">
+		<option value="average">Average</option>
+		<option value="spot">Spot</option>
+		<option value="backlit">Backlit</option>
+		<option value="matrix">Matrix</option>
+	    </select>
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="shutter_speed" class="col-sm-2 control-label">Shutter Speed</label>
+    	<div class="col-sm-10">
+            <input type="number" name="shutter_speed" class="form-control" placeholder="0" value="0">
+	    <span class="help-block">Shutter speen in Microseconds. 
+	    			     One Microsecond is one millionth (<sup>1</sup>/<sub>1,000,000</sub>) of a second.
+	    </span>
+	</div>
+ </div>
 
 <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <input type="submit" class="btn btn-success" value="Take photo">
         </div>
     </div>
+</div> <!-- close col-md-6 -->
+
 </form>
+
+</div> <!-- close row -->
 {% else %}
 <div class="alert">
     <p>You need to be logged in to take a photo</p>

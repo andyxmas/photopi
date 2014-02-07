@@ -11,6 +11,7 @@
 
     <!-- Custom styles -->
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap-lightbox.min.css') }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -88,10 +89,13 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
-    <!-- Bootstrap-lightbox: http://www.jasonbutz.info/bootstrap-lightbox/ -->
-    <link rel=stylesheet type=text/css href="/static/slider.css">
-    <script src="/static/bootstrap-slider.js"></script>
+    <!-- Bootstrap Slider -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='slider.css') }}">
+    <script src="{{ url_for('static', filename='bootstrap-slider.js') }}">
     <script>$('.slider').slider()</script>
+
+    <!-- Bootstrap-lightbox: http://www.jasonbutz.info/bootstrap-lightbox/ -->
+    <script src="{{ url_for('static', filename='bootstrap-lightbox.js') }}">
 
 </body>
 
