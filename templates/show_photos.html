@@ -18,16 +18,18 @@
 	<td>
 	{% if session.logged_in %}
         
-  <form class="one-button">
-      <input type="hidden" value="{{ photo.id }}" name="id" />
-      <input type="hidden" value="{{ photo.filename }}" name="filename" />
-      <button class="btn" type="submit">Edit</button>
-  </form>
-	<form class="one-button" action="{{ url_for('delete_photo') }}" method="post">
+    <form class="one-button" action="{{ url_for('show_exif') }}" method="post">
+        <input type="hidden" value="{{ photo.filename }}" name="filename" />
+        <button class="btn" type="submit">Exif Data</button>
+    </form>
+  
+    <form class="one-button" action="{{ url_for('delete_photo') }}" method="post">
     	<input type="hidden" value="{{ photo.id }}" name="id" />
-      <input type="hidden" value="{{ photo.filename }}" name="filename" />
+        <input type="hidden" value="{{ photo.filename }}" name="filename" />
     	<button class="btn btn-warning" type="submit">Delete</button>
-	</form>	
+    </form>
+
+	
 	{% endif %}
 	</td>
     {% else %}

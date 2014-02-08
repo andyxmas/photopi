@@ -8,6 +8,7 @@ import datetime
 import os
 import sys
 import datetime
+import exifread
 
 DEBUG = True
 # configuration
@@ -99,6 +100,19 @@ def add_photo():
     flash('New photo was successfully posted', 'success')
 
     return redirect(url_for('show_photos'))
+
+@app.route('/show_exif', methods=['POST'])
+def show_exif():
+    filename = request.form['filename']
+    photo_location = app.config['PHOTO_DIRECTORY'] + filename
+    if filename[-4:] == '.jpg':
+        f = open(photo_location, 'rb')
+	exif = exifread.process_file(f)
+	return render_template('show_exif.html', exif=exif)
+    else:
+	flash('Exif data can only be shown for .jpg files', 'error')
+	return redirect(url_for('show_photos'))
+
 
 @app.route('/delete', methods=['POST'])
 def delete_photo():
