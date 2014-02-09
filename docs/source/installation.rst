@@ -15,3 +15,11 @@ Configuration
 	- sudo nano /etc/iptables.firewall.rules
 	- sudo iptables-restore < /etc/iptables.firewall.rules
  - Set the port in the flask app ``app.run(host='0.0.0.0', port=8080)``
+
+Initialise the database
+-----------------------
+
+From the python interpreter::
+
+    from photos import init_db
+    init_db()
