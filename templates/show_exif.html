@@ -1,14 +1,20 @@
-<table>
-    <tr>
-	<th>Tags</th>
-    </tr>
-{% for tag in exif %}
-    <tr>
-	<td>{{ tag }}</td>
-    </tr>
-{% endfor %}
-</table>
-<br />
-<br />
 
-{{ exif }}
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+	    <th>Tags</th>
+	    <th>Value</th>
+        </tr>
+{% for tag in exif.keys() %}
+        <tr>
+	    <td>{{ tag }}</td>
+	    <td>{{ exif[tag] }}</td>
+        </tr>
+{% endfor %}
+    </table>
+</div>
+
+{% endblock %}
