@@ -15,14 +15,9 @@
 	<td>{{ photo.id }}</td>
 	<td><a rel="lightbox" href="/static/photos/{{ photo.filename }}">{{ photo.filename }}</a></td>
         <td>{{ photo.date }}</td>
-	<td>
-	{% if session.logged_in %}
-        
-    <form class="one-button" action="{{ url_for('show_exif') }}" method="post">
-        <input type="hidden" value="{{ photo.filename }}" name="filename" />
-        <button class="btn" type="submit">Exif Data</button>
-    </form>
-  
+	<td><a class="btn" href="/show_exif/{{ photo.id }}">Show Exif</a>
+	
+	{% if session.logged_in %}  
     <form class="one-button" action="{{ url_for('delete_photo') }}" method="post">
     	<input type="hidden" value="{{ photo.id }}" name="id" />
         <input type="hidden" value="{{ photo.filename }}" name="filename" />

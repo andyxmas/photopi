@@ -1,4 +1,5 @@
 # all the imports
+from __future__ import unicode_literals
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
@@ -101,16 +102,21 @@ def add_photo():
 
     return redirect(url_for('show_photos'))
 
-@app.route('/show_exif', methods=['POST'])
-def show_exif():
-    filename = request.form['filename']
+@app.route('/show_exif/<photo_id>')
+def show_exif(photo_id):
+    # filename = request.form['filename']
+    query = 'select filename from photos WHERE id=%s' % str(photo_id)
+    cur = g.db.execute(query)
+    result = cur.fetchone()
+    filename = str(result[0])
     photo_location = app.config['PHOTO_DIRECTORY'] + filename
     if filename[-4:] == '.jpg':
         f = open(photo_location, 'rb')
 	exif = exifread.process_file(f)
 	return render_template('show_exif.html', exif=exif)
     else:
-	flash('Exif data can only be shown for .jpg files', 'error')
+	txt = filename
+	flash(txt, 'error')
 	return redirect(url_for('show_photos'))
 
 
