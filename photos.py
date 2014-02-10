@@ -113,7 +113,7 @@ def show_exif(photo_id):
     if filename[-4:] == '.jpg':
         f = open(photo_location, 'rb')
 	exif = exifread.process_file(f)
-	return render_template('show_exif.html', exif=exif)
+	return render_template('show_exif.html', exif=exif, photo_id = photo_id)
     else:
 	txt = filename
 	flash(txt, 'error')
