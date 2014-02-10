@@ -18,7 +18,7 @@
 	<td><a rel="lightbox" href="/static/photos/{{ photo.filename }}">{{ photo.filename }}</a></td>
         <td>{{ photo.date }}</td>
 	<td><a class="btn" href="/show_exif/{{ photo.id }}">Show Exif</a>
-	    <a class="btn exif-button" href="/show_exif/{{ photo.id }}">Ajax Exif</a>
+	    <a class="btn exif-button" onclick="ajif({{ photo.id }})">Ajax Exif</a>
 	
 	{% if session.logged_in %}  
     <form class="one-button" action="{{ url_for('delete_photo') }}" method="post">
@@ -38,18 +38,14 @@
     </table>
   </div>
 
-<br />
-<p>test:</p>
 <div id="exif-content"></div>
 
-<a id="exif-button" class="btn">Exif Button</a>
-
-<script>$( "#exif-button" ).click(function() {
-    $( "#exif-content" ).load( "/show_exif/4", function(){
-	$('#myModal').modal()
-} );
-});
+<script>
+function ajif(photo_id){
+    $( "#exif-content" ).load( "/show_exif/" + photo_id, function(){
+        $('#myModal').modal()
+    } );
+}
 </script>
-
 
 {% endblock %}
