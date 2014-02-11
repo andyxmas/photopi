@@ -1,0 +1,51 @@
+{% extends "show_photos.html" %}
+{% block photos %}
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+      <tr>
+	<th>ID</th>
+        <th>Filename</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+
+    {% for photo in photos %}
+      <tr>
+	<td>{{ photo.id }}</td>
+	<td><a rel="lightbox" href="/static/photos/{{ photo.filename }}">
+		{{ photo.filename }}
+	    </a>
+	</td>
+        <td>{{ photo.date }}</td>
+	<td><a class="btn btn-info" onclick="ajif({{ photo.id }})">Exif Data</a>
+	
+	{% if session.logged_in %}  
+    <form class="one-button" action="{{ url_for('delete_photo') }}" method="post">
+    	<input type="hidden" value="{{ photo.id }}" name="id" />
+        <input type="hidden" value="{{ photo.filename }}" name="filename" />
+    	<button class="btn btn-warning" type="submit">Delete</button>
+    </form>
+
+	
+	{% endif %}
+	</td>
+    {% else %}
+      <tr>
+        <td colspan="2">Unbelievable.  No photos here so far</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+
+<div id="exif-content"></div>
+
+<script>
+function ajif(photo_id){
+    $( "#exif-content" ).load( "/show_exif/" + photo_id, function(){
+        $('#myModal').modal()
+    } );
+}
+</script>
+
+{% endblock %}

@@ -49,6 +49,12 @@ def show_photos():
     photos = [dict(date=row[0], title=row[1], text=row[2], id=row[3], filename=row[4]) for row in cur.fetchall()]
     return render_template('show_photos_icons.html', photos=photos)
 
+@app.route('/list_view')
+def show_photos_list():
+    cur = g.db.execute('select date, title, text, id, filename from photos order by id desc')
+    photos = [dict(date=row[0], title=row[1], text=row[2], id=row[3], filename=row[4]) for row in cur.fetchall()]
+    return render_template('show_photos_list.html', photos=photos)
+
 @app.route('/take-photo')
 def take_photo():
     return render_template('take_photo.html') 
