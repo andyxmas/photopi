@@ -2,6 +2,34 @@
 {% block body %}
 
   <h1>Photos</h1>
+
+<div class="btn-group">
+        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th"></span></button>
+        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span></button>
+      </div>
+
+<div class="row">
+    {% for photo in photos %}
+  <div class="col-sm-6 col-md-3">
+    <div class="thumbnail">
+      <img src="/static/photos/{{ photo.filename }}" alt="Photo {{ photo.id }}" />
+      <div class="caption">
+        <h3>Photo {{ photo.id }}</h3>
+	<a class="btn btn-info" onclick="ajif({{ photo.id }})">Exif Data</a>
+
+        {% if session.logged_in %}
+    	<form class="one-button" action="{{ url_for('delete_photo') }}" method="post">
+            <input type="hidden" value="{{ photo.id }}" name="id" />
+            <input type="hidden" value="{{ photo.filename }}" name="filename" />
+            <button class="btn btn-warning" type="submit">Delete</button>
+    	</form>
+	{% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
   
   <div class="table-responsive">
     <table class="table table-bordered table-striped table-hover">
@@ -15,10 +43,12 @@
     {% for photo in photos %}
       <tr>
 	<td>{{ photo.id }}</td>
-	<td><a rel="lightbox" href="/static/photos/{{ photo.filename }}">{{ photo.filename }}</a></td>
+	<td><a rel="lightbox" href="/static/photos/{{ photo.filename }}">
+		{{ photo.filename }}
+	    </a>
+	</td>
         <td>{{ photo.date }}</td>
-	<td><a class="btn" href="/show_exif/{{ photo.id }}">Show Exif</a>
-	    <a class="btn exif-button" onclick="ajif({{ photo.id }})">Ajax Exif</a>
+	<td><a class="btn btn-info" onclick="ajif({{ photo.id }})">Exif Data</a>
 	
 	{% if session.logged_in %}  
     <form class="one-button" action="{{ url_for('delete_photo') }}" method="post">

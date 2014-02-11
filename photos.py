@@ -47,7 +47,7 @@ def teardown_request(exception):
 def show_photos():
     cur = g.db.execute('select date, title, text, id, filename from photos order by id desc')
     photos = [dict(date=row[0], title=row[1], text=row[2], id=row[3], filename=row[4]) for row in cur.fetchall()]
-    return render_template('show_photos.html', photos=photos)
+    return render_template('show_photos_icons.html', photos=photos)
 
 @app.route('/take-photo')
 def take_photo():
@@ -97,7 +97,7 @@ def add_photo():
 	camera.image_effect = (request.form['image_effect'])
 	camera.meter_mode = (request.form['meter_mode'])
 	camera.shutter_speed = (int(request.form['shutter_speed']))
-	camera.capture(photo_location, format = 'jpeg', quality = int(request.form['jpg-quality']))
+	camera.capture(photo_location, format = 'jpeg', quality = int(request.form['jpg-quality']), thumbnail = (64, 48, 35))
     flash('New photo was successfully posted', 'success')
 
     return redirect(url_for('show_photos'))
