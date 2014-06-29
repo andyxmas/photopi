@@ -90,22 +90,49 @@ def add_photo():
     g.db.execute('insert into photos (date, title, text, filename) values (?, ?, ?, ?)',
                  [datetime.datetime.now(), request.form['photo-title'], request.form['photo-desc'], photo_filename])
     g.db.commit()
-    with picamera.PiCamera() as camera:
-        camera.brightness = (int(request.form['brightness']))
-        camera.ISO = (int(request.form['ISO']))
-	camera.awb_mode = (request.form['awb_mode'])
-	camera.contrast = (int(request.form['contrast']))
-        camera.sharpness = (int(request.form['sharpness']))
-	camera.exposure_compensation = (int(request.form['exposure_compensation']))
-	camera.exposure_mode = (request.form['exposure_mode'])
-        camera.vflip = (request.form['vflip'])
-        camera.hflip = (request.form['hflip'])
-	camera.image_effect = (request.form['image_effect'])
-	camera.meter_mode = (request.form['meter_mode'])
-	camera.shutter_speed = (int(request.form['shutter_speed']))
-	camera.capture(photo_location, format = 'jpeg', quality = int(request.form['jpg-quality']), thumbnail = (64, 48, 35))
-    flash('New photo was successfully posted', 'success')
 
+    brightness = "camera.brightness = " + (request.form['brightness'])
+    iso = "camera.ISO = " + (request.form['ISO'])
+    awb = "camera.awb_mode = " + (request.form['awb_mode'])
+    contrast = "camera.contrast = " + (request.form['contrast'])
+    sharpness = "camera.sharpness = " + (request.form['sharpness'])
+    exposure_compensation = "camera.exposure_compensation = " + (request.form['exposure_compensation'])
+    exposure_mode = "camera.exposure_mode = " + (request.form['exposure_mode'])
+    vflip = "camera.vflip = " + (request.form['vflip'])
+    hflip = "camera.hflip = " + (request.form['hflip'])
+    image_effect = "camera.image_effect = " + (request.form['image_effect'])
+    meter_mode = "camera.meter_mode = " + (request.form['meter_mode'])
+    shutter_speed = "camera.shutter_speed = " + (request.form['shutter_speed'])
+
+    with picamera.PiCamera() as camera:
+        brightness
+	iso
+	awb
+	contrast
+	sharpness
+	exposure_compensation
+	exposure_mode
+	vflip
+	hflip
+	image_effect
+	meter_mode
+	shutter_speed
+	camera.capture(photo_location, format = 'jpeg', quality = int(request.form['jpg-quality']), thumbnail = (64, 48, 35))
+
+    flash('New photo was successfully posted', 'success')
+    flash (brightness + 
+	iso + 
+	awb + 
+	contrast + 
+        sharpness + 
+        exposure_compensation + 
+        exposure_mode + 
+        vflip + 
+        hflip + 
+        image_effect +
+        meter_mode +
+        shutter_speed,
+	 'info')
     return redirect(url_for('show_photos'))
 
 @app.route('/show_exif/<photo_id>')

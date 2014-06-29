@@ -5,8 +5,10 @@
     {% for photo in photos %}
   <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
+      <a rel="lightbox" href="/static/photos/{{ photo.filename }}">
       <img src="/static/photos/{{ photo.filename }}" alt="Photo {{ photo.id }}" />
-      <div class="caption">
+      </a>
+	<div class="caption">
         <h3>Photo {{ photo.id }}</h3>
 	<a class="btn btn-info" onclick="ajif({{ photo.id }})">Exif Data</a>
 
