@@ -105,18 +105,18 @@ def add_photo():
     shutter_speed = "camera.shutter_speed = " + (request.form['shutter_speed'])
 
     with picamera.PiCamera() as camera:
-        brightness
-	iso
-	awb
-	contrast
-	sharpness
-	exposure_compensation
-	exposure_mode
-	vflip
-	hflip
-	image_effect
-	meter_mode
-	shutter_speed
+  	camera.brightness = (int(request.form['brightness']))
+        camera.ISO = (int(request.form['ISO']))
+	camera.awb_mode = (request.form['awb_mode'])
+	camera.contrast = (int(request.form['contrast']))
+        camera.sharpness = (int(request.form['sharpness']))
+	camera.exposure_compensation = (int(request.form['exposure_compensation']))
+	camera.exposure_mode = (request.form['exposure_mode'])
+        camera.vflip = (request.form['vflip'])
+        camera.hflip = (request.form['hflip'])
+	camera.image_effect = (request.form['image_effect'])
+	camera.meter_mode = (request.form['meter_mode'])
+	camera.shutter_speed = (int(request.form['shutter_speed']))
 	camera.capture(photo_location, format = 'jpeg', quality = int(request.form['jpg-quality']), thumbnail = (64, 48, 35))
 
     flash('New photo was successfully posted', 'success')
