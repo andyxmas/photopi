@@ -16,16 +16,14 @@
         </tr>
 {% for tag in exif.keys() %}
         <tr>
+	{% if tag not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename', 'EXIF MakerNote'): %}
+	<tr>
 	    <td>{{ tag }}</td>
 	    <td>{{ exif[tag] }}</td>
         </tr>
+	{% endif %}
 {% endfor %}
     </table>
-</div>
-
-<h2>raw:<h2/>
-<div class="raw">
- {{exif}}
 </div>
 
 </div>

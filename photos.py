@@ -120,17 +120,17 @@ def add_photo():
 	camera.capture(photo_location, format = 'jpeg', quality = int(request.form['jpg-quality']), thumbnail = (64, 48, 35))
 
     flash('New photo was successfully posted', 'success')
-    flash (brightness + 
-	iso + 
-	awb + 
-	contrast + 
-        sharpness + 
-        exposure_compensation + 
-        exposure_mode + 
-        vflip + 
-        hflip + 
-        image_effect +
-        meter_mode +
+    flash (brightness + ' | ' +
+	iso + ' | ' +
+	awb + ' | ' +
+	contrast +  ' | ' +
+        sharpness +  ' | ' +
+        exposure_compensation + ' | ' +
+        exposure_mode + ' | ' +
+        vflip + ' | ' +
+        hflip + ' | ' +
+        image_effect + ' | ' +
+        meter_mode + ' | ' +
         shutter_speed,
 	 'info')
     return redirect(url_for('show_photos'))
