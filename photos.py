@@ -15,8 +15,8 @@ DEBUG = True
 # configuration
 DATABASE = 'photos.db'
 SECRET_KEY = 'with random words will it be secure development key?'
-USERNAME = 'marco'
-PASSWORD = 'lionel-christmas'
+USERNAME = 'test'
+PASSWORD = 'test'
 PHOTO_DIRECTORY = 'static/photos/'
 
 # create our little application :)
