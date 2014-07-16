@@ -9,7 +9,16 @@
       <img src="/static/photos/{{ photo.filename }}" alt="Photo {{ photo.id }}" />
       </a>
 	<div class="caption">
-        <h3>Photo {{ photo.id }}</h3>
+        <h3>
+	  <a href="#" class="edit-inline" data-type="text" data-pk="{{ photo.id }}" data-name="title" data-url="/edit" data-title="Enter photo title">
+	    {% if photo.title %}
+		{{ photo.title }}
+	    {% else %}
+        	Photo {{ photo.id }}
+	    {% endif %}
+	  </a>
+	</h3>
+
 	<a class="btn btn-info" onclick="ajif({{ photo.id }})">Exif Data</a>
 
         {% if session.logged_in %}

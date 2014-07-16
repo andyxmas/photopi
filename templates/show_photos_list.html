@@ -6,7 +6,7 @@
       <tr>
 	<th>ID</th>
         <th>Filename</th>
-        <th>Date</th>
+        <th>Title</th>
         <th>Actions</th>
       </tr>
 
@@ -17,7 +17,11 @@
 		{{ photo.filename }}
 	    </a>
 	</td>
-        <td>{{ photo.date }}</td>
+        <td>
+	    <a href="#" class="edit-inline" data-type="text" data-pk="{{ photo.id }}" data-name="title" data-url="/edit" data-title="Enter photo title">
+		    {{ photo.title }}
+	    </a>
+	</td>
 	<td><a class="btn btn-info" onclick="ajif({{ photo.id }})">Exif Data</a>
 	
 	{% if session.logged_in %}  

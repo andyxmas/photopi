@@ -174,6 +174,20 @@ def delete_photo():
         flash('The photo file was succesfully deleted', 'success')
     return redirect(url_for('show_photos'))
 
+@app.route('/edit', methods=['POST'])
+def edit_photo():
+    if not session.get('logged_in'):
+        abort(401)
+    try:
+        #g.db.execute('UPDATE PHOTOS SET TITLE=' + request.form['value'] + 'WHERE ID=' + request.form['pk'])
+        g.db.execute('UPDATE photos SET title=? WHERE id=?', (str(request.form['value']), str(request.form['pk'])))
+	g.db.commit()
+    except:
+        flash('Something went wrong with editing the photo title', 'danger')
+    else:
+        flash('Photo title succesfully updated', 'success')
+    return redirect(url_for('show_photos'))
+
 #Run this on the little dev server
 if __name__ == '__main__':
 #    app.debug = True
