@@ -3,3 +3,4 @@
 *.db
 docs/*
 photopi.config
+.c9/

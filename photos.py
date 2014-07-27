@@ -1,10 +1,19 @@
 # all the imports
+import imp
 from __future__ import unicode_literals
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
 from contextlib import closing
-import picamera
+
+#check that picamera is available. if not, we'll fail new photos greacefully
+try:
+    imp.find_module('picamera')
+    picamera_available = True
+    import picamera
+except ImportError:
+    picamera_available = False
+
 import datetime
 import os
 import sys
@@ -81,6 +90,12 @@ def logout():
 def add_photo():
     if not session.get('logged_in'):
         abort(401)
+    
+# if picamera modules is not available, fail gracefully
+    if(!picamera_available):
+        flash('Picamera module is not available - not possible to take photo', 'error')
+        return redirect(url_for('show_photos'))
+        
     photo_filename = datetime.datetime.now().strftime("photo_%d-%m-%Y-%H-%M-%S.jpg")
     photo_location = app.config['PHOTO_DIRECTORY'] + photo_filename
     g.db.execute('insert into photos (date, title, text, filename) values (?, ?, ?, ?)',
