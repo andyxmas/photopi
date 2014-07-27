@@ -16,7 +16,22 @@ Installation
 ------------
 
  - Always best to start by creating a new (virtualenv)[http://virtualenvwrapper.readthedocs.org/en/latest/]
- - @todo - do a run through and give the actual commands for install all this:
+ 
+@todo - do a run through and give the actual commands for install all this:
+
+ - `sudo apt-get install python-setuptools`
+ - `pip install flask`
+
+Installation on c9.io
+---------------------
+
+ - Create a new (virtualenv)[http://virtualenvwrapper.readthedocs.org] `mkvirtualenv photopi`
+ - Install (Flask)[http://flask.pocoo.org] `pip install Flask`
+ - Install (picamera)[http://picamera.readthedocs.org/] `pip install picamera`
+ - Install (ExifRead)[https://pypi.python.org/pypi/ExifRead] `pip install ExifRead`
+
+
+list from pip:
 
  - argparse (1.2.1)
  - docutils (0.11)
