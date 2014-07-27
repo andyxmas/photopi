@@ -1,5 +1,4 @@
 # all the imports
-import imp
 from __future__ import unicode_literals
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -7,6 +6,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from contextlib import closing
 
 #check that picamera is available. if not, we'll fail new photos greacefully
+import imp
 try:
     imp.find_module('picamera')
     picamera_available = True
@@ -92,7 +92,7 @@ def add_photo():
         abort(401)
     
 # if picamera modules is not available, fail gracefully
-    if(!picamera_available):
+    if not (picamera_available):
         flash('Picamera module is not available - not possible to take photo', 'error')
         return redirect(url_for('show_photos'))
         
