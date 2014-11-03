@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # all the imports
 from __future__ import unicode_literals
 import sqlite3
