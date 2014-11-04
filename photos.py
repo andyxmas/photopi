@@ -22,6 +22,7 @@ import sys
 import datetime
 import exifread
 from PIL import Image
+import glob
 
 # create our little application :)
 app = Flask(__name__)
@@ -135,7 +136,7 @@ def add_photo():
 
     file, ext = os.path.splitext(photo_location)
     im = Image.open(photo_location)
-    size = '128, 128'
+    size = 253, 189
     im.thumbnail(size, Image.ANTIALIAS)
     im.save(file + "_thumb.jpg", "JPEG")
 
@@ -171,6 +172,26 @@ def show_exif(photo_id):
 	txt = filename
 	flash(txt, 'error')
 	return redirect(url_for('show_photos'))
+
+@app.route('/regen_thumbnails')
+def regen_thumbs():
+    size = 253, 189
+
+    for filePath in glob.glob("static/photos/*thumb*"):
+    if os.path.isfile(filePath):
+        os.remove(filePath)
+
+    for infile in glob.glob("static/photos/*.jpg"):
+        file, ext = os.path.splitext(infile)
+        im = Image.open(infile)
+        im.thumbnail(size, Image.ANTIALIAS)
+        im.save(file + "_thumb.jpg", "JPEG")
+#    except:
+#        flash('Something went wrong with thumbnail generation', 'danger')
+#    else:
+#        flash('thumbnail generation looks to have worked', 'info')
+
+    return redirect(url_for('show_photos'))
 
 
 @app.route('/delete', methods=['POST'])
