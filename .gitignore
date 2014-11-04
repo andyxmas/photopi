@@ -1,6 +1,7 @@
 *.pyc
 *.jpg
 *.db
+*.save
 docs/*
 photopi.config
 .c9/

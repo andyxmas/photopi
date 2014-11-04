@@ -21,6 +21,7 @@ import os
 import sys
 import datetime
 import exifread
+from PIL import Image
 
 # create our little application :)
 app = Flask(__name__)
@@ -131,6 +132,12 @@ def add_photo():
 	camera.meter_mode = (request.form['meter_mode'])
 	camera.shutter_speed = (int(request.form['shutter_speed']))
 	camera.capture(photo_location, format = 'jpeg', quality = int(request.form['jpg-quality']), thumbnail = (64, 48, 35))
+
+    file, ext = os.path.splitext(photo_location)
+    im = Image.open(photo_location)
+    size = '128, 128'
+    im.thumbnail(size, Image.ANTIALIAS)
+    im.save(file + "_thumb.jpg", "JPEG")
 
     flash('New photo was successfully posted', 'success')
     flash (brightness + ' | ' +
